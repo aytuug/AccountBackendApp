@@ -16,13 +16,22 @@ data class Transaction(
         val amount : BigDecimal?,
         val transactionDate : LocalDateTime?,
 
-        @ManyToOne(fetch = FetchType.LAZY, optional = false, cascade = [CascadeType.ALL])
+        @ManyToOne(fetch = FetchType.LAZY, optional = false)
         @JoinColumn(name = "account_id", nullable = false)
         val account : Account
 
 
 
 ){
+
+        constructor(amount: BigDecimal,account: Account) : this (
+                id = "",
+                amount = amount,
+                transactionDate = LocalDateTime.now(),
+                transactionType = TransactionType.INITIAL,
+                account = account
+        )
+
         override fun equals(other: Any?): Boolean {
                 if (this === other) return true
                 if (javaClass != other?.javaClass) return false
